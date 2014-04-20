@@ -88,3 +88,5 @@ npv.znoadjust=function(i,cf.z) {
   sum(cf.z/d)
 }
 lastinvec=function(x) {x[length(x)]}
+
+

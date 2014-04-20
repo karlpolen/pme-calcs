@@ -8,7 +8,7 @@ source('pme functions.r')
 ```
 ### A demonstration of various methods
 
-In this post I will discuss traditional private equity performance measurements of IRR, TVPI and DPI and compare them to public market equivalent ("PME") methods. I provide code in R and an example data set to illustrate these calculations.
+In this post I will discuss traditional private equity performance measurements of IRR, TVPI and DPI and compare them to public market equivalent ("PME") methods. I provide code in R and an example data set to illustrate these calculations.  Code files and sample data for this post are found at https://github.com/karlpolen/pme-calcs
 
 ### Background 
 Private equity investments are investments in companies not listed on public exchanges. Private equity strategies are often regarded as riskier than public equity because they are illiquid, often employ higher leverage and may involve investments with companies undergoing restructuring, rapid growth, management changes or companies which are less established.  As such, investors in private equity generally expect to receive a return premium compared to investments in public markets.
@@ -221,6 +221,7 @@ npv.znoadjust=function(i,cf.z) {
 }
 
 lastinvec=function(x) {x[length(x)]}
+
 
 ```
 
