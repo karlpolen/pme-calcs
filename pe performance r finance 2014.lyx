@@ -1,0 +1,1261 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+\setbeamertemplate{navigation symbols}{}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+\end_preamble
+\use_default_options true
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Private Equity Performance Analysis in R
+\end_layout
+
+\begin_layout Author
+Karl Polen
+\end_layout
+
+\begin_layout Date
+R/Finance 2014
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+What is private equity?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Private Equity (
+\begin_inset Quotes eld
+\end_inset
+
+PE
+\begin_inset Quotes erd
+\end_inset
+
+) involves investing in companies that are not listed on a public stock
+ exchange
+\end_layout
+
+\begin_layout Itemize
+PE investments generally take the form of a limited partnership interest
+ in a partnership, usually called a 
+\begin_inset Quotes eld
+\end_inset
+
+fund
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+A typical fund will invest in around ten companies
+\end_layout
+
+\begin_layout Itemize
+PE invests in situations where there is a value add opportunity from growth,
+ restructuring, acquisitions and other such strategies
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Performance Measurement Issue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Because of the illiquidity and risks associated with the value creation
+ strategies, PE investors generally expect to earn a return premium compared
+ to public markets
+\end_layout
+
+\begin_layout Itemize
+However, PE investments vary in amount over time because the PE investor
+ draws the capital over the first 3 to 5 years of the partnership and then
+ sells the investments over the remaining 5 to 7 years
+\end_layout
+
+\begin_layout Itemize
+This creates a challenge in assessing performance in comparison to public
+ market returns because because IRRs calculated on PE cash flows are not
+ comparable to time weighted returns (
+\begin_inset Quotes eld
+\end_inset
+
+TWR
+\begin_inset Quotes erd
+\end_inset
+
+) on public markets investments
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Traditional Performance Measurements
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+We can analyze the performance of a fund from the following data
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the time series of capital calls 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$C_t$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the time series of distributions 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$D_t$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the remaining unrealized value at time 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$n$
+\end_layout
+
+\end_inset
+
+ of the investment 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$V_n$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The distributions as percent of invested (
+\begin_inset Quotes eld
+\end_inset
+
+DPI
+\begin_inset Quotes erd
+\end_inset
+
+) is 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+frac{
+\backslash
+Sigma D_t}{
+\backslash
+Sigma C_T}$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The total value as percent of invested (
+\begin_inset Quotes eld
+\end_inset
+
+TVPI
+\begin_inset Quotes erd
+\end_inset
+
+) is 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+frac{
+\backslash
+Sigma D_t + V_n}{
+\backslash
+Sigma C_T}$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The IRR is calculated from the calls (as negative numbers), the distributions
+ and the final value 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$IRR(-C_t,D_t,V_n)$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+How to calculate an IRR
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+An IRR is found by calculating the root of a polynomial 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+sum_{i=0}^{n} c_i x^i$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+where 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$c$
+\end_layout
+
+\end_inset
+
+ are the cash flow coefficients and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$x$
+\end_layout
+
+\end_inset
+
+ is 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+frac{1}{1+irr}$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+You can use uniroot or polyroot to calculate the answer in R
+\end_layout
+
+\begin_layout Itemize
+But you need a way to select among multiple roots 
+\end_layout
+
+\begin_layout Itemize
+And it turns out there are problems in a production environment with long
+ cash flow time series (hundreds of entries) with many sign changes
+\end_layout
+
+\begin_layout Itemize
+I demonstrate code to deal with these issues at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://rpubs.com/kpolen/15756"
+target "http://rpubs.com/kpolen/15756"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Public Market Equivalent Measures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The traditional performance measures of IRR, DPI and TVPI provide useful
+ tools to understand the performance of a particular investment and to compare
+ private equity investments with each other
+\end_layout
+
+\begin_layout Itemize
+But they don't provide a reliable way to compare private equity investments
+ with public market indices
+\end_layout
+
+\begin_layout Itemize
+So there were a number of efforts that attempted to calculate a benchmark
+ public market return as though you made investments and withdrawals from
+ the public market portfolio in the same pattern as the private equity investmen
+t
+\end_layout
+
+\begin_layout Itemize
+Such methods are referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+PME
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+We will discuss two such methods here
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Kaplan Schoar
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Steve Kaplan and Antoinette Schoar proposed a method for calculating PME
+ that we will refer to as 
+\begin_inset Quotes eld
+\end_inset
+
+KSPME
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kaplan2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In this approach, you calculate a ratio where 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the numerator is the wealth you have from the distributions you receive
+ from a PE as if invested in the public market index and held until time
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$n$
+\end_layout
+
+\end_inset
+
+ and 
+\end_layout
+
+\begin_layout Itemize
+the denominator is the wealth you would have had you invested the capital
+ that was called for the PE investment in the stock market, instead, and
+ held it until time 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$n$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Values of this ratio greater than one indicate the private equity investment
+ outperformed the public market index
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Kaplan Schoar (2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+So, KSPME requires additional data of values of a dividend adjusted index
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$M_t$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+You then calculate a factor to convert cash flows to their value at time
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$n$
+\end_layout
+
+\end_inset
+
+ as 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$FV_t=
+\backslash
+frac{M_n}{M_t}$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Next you calculate the future values of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$C_t$
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$D_t$
+\end_layout
+
+\end_inset
+
+ as 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$C_{FV}=C_t * FV_t$ ; $D_{FV} = D_t * FV_t$   
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+You can now calculate
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$KSPME = 
+\backslash
+frac{
+\backslash
+Sigma D_{FV} + V_n}{
+\backslash
+Sigma C_{FV}}$      
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Direct Alpha
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+KSPME provides a wealth measure of how much extra money you made, but doesn't
+ tell you how fast you made it
+\end_layout
+
+\begin_layout Itemize
+Gredil, Griffiths and Stucke have proposed a method called 
+\begin_inset Quotes eld
+\end_inset
+
+Direct Alpha
+\begin_inset Quotes erd
+\end_inset
+
+ to express the outperformance as an annual rate of return
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gredil2014"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+This calculation works from exactly the same data Direct Alpha is calculated
+ as the IRR of a time series constructed by combining the future value adjusted
+ calls (as negative numbers), distributions and the final value
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$Direct Alpha = 
+\backslash
+log{(1+IRR(-C_{FV},D_{FV},V_n))}$ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Determining a Market Return from Direct Alpha
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+For consistency with the capital asset pricing model Direct Alpha is stated
+ as continuously compounded return
+\end_layout
+
+\begin_layout Itemize
+For a PE investment with an internal rate of return of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$IRR_{PE}$
+\end_layout
+
+\end_inset
+
+ you can calculate an equivalent IRR for an investment in public markets
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$IRR_M$
+\end_layout
+
+\end_inset
+
+ as 
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+log{(1+IRR_M)} = 
+\backslash
+log{(1+IRR_{PE})} - DirectAlpha$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout FragileFrame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example Calculation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Code and a realistic data file for a hypothetical private equity portfolio
+ are provided at 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://github.com/karlpolen/pme-calcs"
+target "https://github.com/karlpolen/pme-calcs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+I describe the calculations and how to use the code at 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://rpubs.com/kpolen/16062"
+target "http://rpubs.com/kpolen/16062"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sample output from this code shown as a table
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<chunk1,echo=FALSE,warning=FALSE,message=FALSE,results='asis'>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+source('pme functions.r') 
+\end_layout
+
+\begin_layout Plain Layout
+
+require(tseries) 
+\end_layout
+
+\begin_layout Plain Layout
+
+require(zoo)
+\end_layout
+
+\begin_layout Plain Layout
+
+require(xtable)
+\end_layout
+
+\begin_layout Plain Layout
+
+pedata=read.csv('pedata.csv') 
+\end_layout
+
+\begin_layout Plain Layout
+
+pedata$date=as.Date(pedata$date,format='%m/%d/%Y') 
+\end_layout
+
+\begin_layout Plain Layout
+
+pedata=split(pedata,pedata$type)
+\end_layout
+
+\begin_layout Plain Layout
+
+total.c=data.frame(fund="Total",aggregate(value~date,pedata$C,sum),type="C")
+\end_layout
+
+\begin_layout Plain Layout
+
+total.v=data.frame(fund="Total",aggregate(value~date,pedata$V,sum),type="V")
+\end_layout
+
+\begin_layout Plain Layout
+
+pedata=rbind(pedata$C,pedata$V,total.c,total.v)
+\end_layout
+
+\begin_layout Plain Layout
+
+r2k=get.hist.quote('^RUT',min(pedata$date)-5,max(pedata$date)+5,quote='AdjClose',
+\end_layout
+
+\begin_layout Plain Layout
+
+  provider='yahoo',retclass='zoo',quiet=TRUE)
+\end_layout
+
+\begin_layout Plain Layout
+
+r2k=na.locf(merge(r2k,zoo(,seq(start(r2k),end(r2k),by='day')),all=TRUE))
+\end_layout
+
+\begin_layout Plain Layout
+
+r2k=data.frame(date=time(r2k),index=as.numeric(r2k))
+\end_layout
+
+\begin_layout Plain Layout
+
+pedata=merge(pedata,r2k)
+\end_layout
+
+\begin_layout Plain Layout
+
+pelist=split(pedata,pedata$fund)
+\end_layout
+
+\begin_layout Plain Layout
+
+stats=lapply(pelist,pe.performance)
+\end_layout
+
+\begin_layout Plain Layout
+
+stats.df=data.frame(lapply(stats,unlist))
+\end_layout
+
+\begin_layout Plain Layout
+
+print(xtable(stats.df))
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout FragileFrame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example Graph
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<chunk2,echo=FALSE,warning=FALSE,message=FALSE,fig.height=5,fig.width=7>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+stats.df=data.frame(t(stats.df))
+\end_layout
+
+\begin_layout Plain Layout
+
+stats.df=data.frame(name=rownames(stats.df),stats.df)
+\end_layout
+
+\begin_layout Plain Layout
+
+require(RColorBrewer)
+\end_layout
+
+\begin_layout Plain Layout
+
+require(ggplot2)
+\end_layout
+
+\begin_layout Plain Layout
+
+pmepal=brewer.pal(n=10,name='Spectral')[c(1,3,8,9,10)]
+\end_layout
+
+\begin_layout Plain Layout
+
+palette(pmepal)
+\end_layout
+
+\begin_layout Plain Layout
+
+pmecut=cut(stats.df$kspme,c(0,.8,.95,1.05,1.2,100),labels=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+ggplot(stats.df,aes(x=ind.irr,y=irr))+
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_text(label=stats.df$name,colour=pmecut)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  xlab("Market Return")+
+\end_layout
+
+\begin_layout Plain Layout
+
+  ylab("Fund IRR")+
+\end_layout
+
+\begin_layout Plain Layout
+
+  geom_abline(intercept=0,slope=1)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  ggtitle("Private Equity Performance")+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("rect",ymin=.47,ymax=.63,xmin=.169,xmax=.181,fill='grey80')+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("text",y=.61,x=.175,label="PME > 1.2",colour=pmepal[5],size=3)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("text",y=.58,x=.175,label="1.05 < PME < 1.2",colour=pmepal[4],size=3)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("text",y=.55,x=.175,label=".95 < PME < 1.05",colour=pmepal[3],size=3)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("text",y=.52,x=.175,label=".8 < PME < 1.05",colour=pmepal[2],size=3)+
+\end_layout
+
+\begin_layout Plain Layout
+
+  annotate("text",y=.49,x=.175,label="PME < .8",colour=pmepal[1],size=3)
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+For more information
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Here is a summary of the links previously mentioned
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Technicalities of Calculating IRRs in a production environment 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://rpubs.com/kpolen/15756"
+target "http://rpubs.com/kpolen/15756"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+More background on PE performance measurements with example calculations
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "http://rpubs.com/kpolen/16062"
+target "http://rpubs.com/kpolen/16062"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Source and data files 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://github.com/karlpolen/pme-calcs"
+target "https://github.com/karlpolen/pme-calcs"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+References
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "pme"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
