@@ -759,9 +759,13 @@ key "Gredil2014"
 \end_layout
 
 \begin_layout Itemize
-This calculation works from exactly the same data Direct Alpha is calculated
- as the IRR of a time series constructed by combining the future value adjusted
- calls (as negative numbers), distributions and the final value
+This calculation works from exactly the same data as KSPME
+\end_layout
+
+\begin_layout Itemize
+Direct Alpha is calculated as the IRR of a time series constructed by combining
+ the future value adjusted calls (as negative numbers), distributions and
+ the final value
 \end_layout
 
 \begin_layout Block
