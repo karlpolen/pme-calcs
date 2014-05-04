@@ -464,13 +464,18 @@ Public Market Equivalent Measures
 \begin_deeper
 \begin_layout Itemize
 The traditional performance measures of IRR, DPI and TVPI provide useful
- tools to understand the performance of a particular investment and to compare
- private equity investments with each other
+ tools to understand the performance of a particular investment
 \end_layout
 
 \begin_layout Itemize
 But they don't provide a reliable way to compare private equity investments
  with public market indices
+\end_layout
+
+\begin_layout Itemize
+Nor do they provide a reliable way to compare PE investments to each other
+ because the timing and market context of deployment can be quite different,
+ even among funds of the same vintage
 \end_layout
 
 \begin_layout Itemize
