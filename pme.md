@@ -29,25 +29,25 @@ Controlling for market context by vintage is useful but still crude because ther
 
 The required data are a time series of capital calls $C_t$, a time series distributions $D_t$, a final value at time $n$ of $V_n$ and a time series of dividend adjusted market indices $M_t$.  You calculate a future value factor as the ratio of the market index at time $n$  divided by the index at prior times $t$ as follows:
 
-$FV_t=\frac{M_n}{M_t}$
+$$FV_t=\frac{M_n}{M_t}$$
 
 You then multiply (pair-wise for each of the values) the future value factor times calls and distributions 
 
-$C_{FV}=C_t * FV_t$ ; $D_{FV} = D_t * FV_t$  
+$$C_{FV}=C_t * FV_t$ ; $D_{FV} = D_t * FV_t$$  
 
 You now have what you need to calculate
 
-$KSPME = \frac{\Sigma D_{FV} + V_n}{\Sigma C_{FV}}$     
+$$KSPME = \frac{\Sigma D_{FV} + V_n}{\Sigma C_{FV}}$$     
 
 KSPME is a wealth measure reflecting how much extra money you have by investing in the private equity fund compared to an alternative public markets investment.  As an aside, the 2005 Kaplan and Schoar examines private equity performance concluding that there was not strong evidence that private equity outperformed the stock market.  In a later article, Kaplan and co-authors took a harder look at the data they were working with and found statistically significant evidence that buyout funds (the primary category of private equity) outperform public markets with a KSPME of about 1.2 (Harris, Jenkinson, and Kaplan, ).
 
 KSPME has some nice mathematical properties that allow it to be related to the capital asset pricing model.  Gredil, Griffiths and Stucke have published an article that explores this relationship and proposes an additional metric, called "Direct Alpha", which is a measure expressed as an annual percent of outperformance of a private equity investment compared to a public market benchmark (Gredil, Griffiths, and Stucke, 2014).  It is calculated as the IRR of a time series constructed by combining the future value adjusted calls (as negative numbers), distributions and the final value.  So, it uses exactly the same data as KSPME but with different calculations to reduce the data to a single measurement.  To be consistent with the CAPM formulation, Direct Alpha is presented as a continuously compounded return.
 
-$Direct Alpha = \log{(1+IRR(-C_{FV},D_{FV},V_n))}$
+$$Direct Alpha = \log{(1+IRR(-C_{FV},D_{FV},V_n))}$$
 
 If you have an IRR of a private equity investment $IRR_{PE}$ calculated as a discrete annual return, you can then calculate an $IRR_M$ that you would have earned by investing in a market index with the same timing of investments and withdrawals as the calls and distributions of the private equity investment.  The below formula presumes you want $IRR_M$ to be a discrete annual amount for compatibility with $IRR_{PE}$.
 
-$\log{(1+IRR_M)} = \log{(1+IRR_{PE})} - DirectAlpha$
+$$\log{(1+IRR_M)} = \log{(1+IRR_{PE})} - DirectAlpha$$
 
 KSPME and Direct Alpha supplement the traditional private equity performance measures with mathematically rigourous methods consistent with the CAPM framework.  KSPME provides a measure of how much additional wealth is gained with a private equity measurement.  Direct Alpha tells you the rate at which the additional wealth is accumulated.
 
