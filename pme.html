@@ -145,7 +145,7 @@ $(document).ready(function () {
 <p>The required data are a time series of capital calls <span class="math inline">\(C_t\)</span>, a time series distributions <span class="math inline">\(D_t\)</span>, a final value at time <span class="math inline">\(n\)</span> of <span class="math inline">\(V_n\)</span> and a time series of dividend adjusted market indices <span class="math inline">\(M_t\)</span>. You calculate a future value factor as the ratio of the market index at time <span class="math inline">\(n\)</span> divided by the index at prior times <span class="math inline">\(t\)</span> as follows:</p>
 <p><span class="math display">\[FV_t=\frac{M_n}{M_t}\]</span></p>
 <p>You then multiply (pair-wise for each of the values) the future value factor times calls and distributions</p>
-<p><span class="math display">\[C_{FV}=C_t * FV_t$ ; $D_{FV} = D_t * FV_t\]</span></p>
+<p><span class="math display">\[C_{FV}=C_t * FV_t\]</span> ; <span class="math display">\[D_{FV} = D_t * FV_t\]</span></p>
 <p>You now have what you need to calculate</p>
 <p><span class="math display">\[KSPME = \frac{\Sigma D_{FV} + V_n}{\Sigma C_{FV}}\]</span></p>
 <p>KSPME is a wealth measure reflecting how much extra money you have by investing in the private equity fund compared to an alternative public markets investment. As an aside, the 2005 Kaplan and Schoar examines private equity performance concluding that there was not strong evidence that private equity outperformed the stock market. In a later article, Kaplan and co-authors took a harder look at the data they were working with and found statistically significant evidence that buyout funds (the primary category of private equity) outperform public markets with a KSPME of about 1.2 (Harris, Jenkinson, and Kaplan, ).</p>

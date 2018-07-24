@@ -37,7 +37,7 @@ $$FV_t=\frac{M_n}{M_t}$$
 
 You then multiply (pair-wise for each of the values) the future value factor times calls and distributions 
 
-$$C_{FV}=C_t * FV_t$ ; $D_{FV} = D_t * FV_t$$  
+$$C_{FV}=C_t * FV_t$$ ; $$D_{FV} = D_t * FV_t$$  
 
 You now have what you need to calculate
 
