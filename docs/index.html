@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Performance measurement for private equity portfolios</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<h1>Performance measurement for private equity portfolios</h1>
+
+<h3>A demonstration of various methods</h3>
+
+<p>In this post I will discuss traditional private equity performance measurements of IRR, TVPI and DPI and compare them to public market equivalent (&ldquo;PME&rdquo;) methods. I provide code in R and an example data set to illustrate these calculations.  Code files and sample data for this post are found at <a href="https://github.com/karlpolen/pme-calcs">https://github.com/karlpolen/pme-calcs</a></p>
+
+<h3>Background</h3>
+
+<p>Private equity investments are investments in companies not listed on public exchanges. Private equity strategies are often regarded as riskier than public equity because they are illiquid, often employ higher leverage and may involve investments with companies undergoing restructuring, rapid growth, management changes or companies which are less established.  As such, investors in private equity generally expect to receive a return premium compared to investments in public markets.</p>
+
+<p>Comparing private equity performance to public markets presents technical challenges.  The usual way to compare two investments is with time weighted returns.  This works with liquid investments where the investor can choose which assets to own and in what weight.  For example, you can use time weighted returns to properly compare the performance of large cap stocks with small cap stocks over whatever time frame or frames are of interest to you.</p>
+
+<p>Private equity doesn&#39;t work the same way.  PE investments are typically in the form of limited partnership interests with subscription agreements pursuant to which the financial sponsor has the right to control the amount and timing of capital which is called in to the partnership.  So, the amount of capital deployed varies over time and the investor has no control over the timing of calls or distributions for the investment.  In this context, time weighted return calculations are not useful in understanding the performance of a private equity investment because the variability in the amount of capital deployed in a particular will typically be very large.  Some private equity sponsors and investors compare their IRR returns with time weighted market returns, but this practice makes no sense because of the cash flow patterns and varying amount of capital deployed.   </p>
+
+<h3>Traditional private equity performance measurements</h3>
+
+<p>The traditional performance metrics for private equity are DPI, TVPI and IRR.  DPI stands for distributions as a percent of invested and is calculated as the sum of distributions received divided by the sum of capital contributions made.  TVPI is &ldquo;total value as a percent of invested&rdquo; and calculates the &ldquo;total value&rdquo; as the sum of distributions plus the value of the unrealized assets still owned by the partnership divided, again, by the sum of the capital calls.  IRR is the internal rate of return, customarily expressed as an annual interest rate, calculated on the cash flows with the capital calls expressed as negative numbers and including the final cash flow as part of the time series for the calculation.  The first two calculations are straightforward.  The IRR calculation presents some technical challenges in a production environment that I discussed in an earlier post <a href="http://rpubs.com/kpolen/15756">http://rpubs.com/kpolen/15756</a>.</p>
+
+<p>These traditional measures collectively give a good sense of the performance of a particular PE investment and allow you to compare private equity investments to each other.  Data services tracking private equity use a combination of these metrics to rank performance in &ldquo;quartiles&rdquo;.  They customarily group funds to control for market context in &ldquo;vintages&rdquo; based on the year the partnership began investing.  So, a 2006 vintage fund which invested across the global financial crisis and earned a 10% IRR might be a top quartile performer for that vintage, while the same IRR would be below average for, say, a 2009 vintage.</p>
+
+<h3>Public Market Equivalent methods</h3>
+
+<p>Controlling for market context by vintage is useful but still crude because there is a lot of variability of patterns of calling and returning capital from fund to fund.  A number of authors proposed methods for this, but Steve Kaplan and Antoinette Schoar wrote an influential article exploring private equity performance (<a href="">Kaplan &amp; Schoar, 2005</a>) .  In this article they formulated a method for calculating private equity performance as a &ldquo;public market equivalent&rdquo; which we will refer to as KSPME.  KSPME is calculated as ratio of benefits to costs and a value greater than 1 indicates performance above the opportunity cost benchmark.  The calculation is illustrated in the following formulas.</p>
+
+<p>The required data are a time series of capital calls \( C_t \), a time series distributions \( D_t \), a final value at time \( n \) of \( V_n \) and a time series of dividend adjusted market indices \( M_t \).  You calculate a future value factor as the ratio of the market index at time \( n \)  divided by the index at prior times \( t \) as follows:</p>
+
+<p>\( FV_t=\frac{M_n}{M_t} \)</p>
+
+<p>You then multiply (pair-wise for each of the values) the future value factor times calls and distributions </p>
+
+<p>\( C_{FV}=C_t * FV_t \) ; \( D_{FV} = D_t * FV_t \)  </p>
+
+<p>You now have what you need to calculate</p>
+
+<p>\( KSPME = \frac{\Sigma D_{FV} + V_n}{\Sigma C_{FV}} \)     </p>
+
+<p>KSPME is a wealth measure reflecting how much extra money you have by investing in the private equity fund compared to an alternative public markets investment.  As an aside, the 2005 Kaplan and Schoar examines private equity performance concluding that there was not strong evidence that private equity outperformed the stock market.  In a later article, Kaplan and co-authors took a harder look at the data they were working with and found statistically significant evidence that buyout funds (the primary category of private equity) outperform public markets with a KSPME of about 1.2 (<a href="http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1932316##">Harris et al. Forthcoming</a>).</p>
+
+<p>KSPME has some nice mathematical properties that allow it to be related to the capital asset pricing model.  Gredil, Griffiths and Stucke have published an article that explores this relationship and proposes an additional metric, called &ldquo;Direct Alpha&rdquo;, which is a measure expressed as an annual percent of outperformance of a private equity investment compared to a public market benchmark (<a href="http://ssrn.com/abstract=2403521">Gredil et al. 2014</a>).  It is calculated as the IRR of a time series constructed by combining the future value adjusted calls (as negative numbers), distributions and the final value.  So, it uses exactly the same data as KSPME but with different calculations to reduce the data to a single measurement.  To be consistent with the CAPM formulation, Direct Alpha is presented as a continuously compounded return.</p>
+
+<p>\( Direct Alpha = \log{(1+IRR(-C_{FV},D_{FV},V_n))} \)</p>
+
+<p>If you have an IRR of a private equity investment \( IRR_{PE} \) calculated as a discrete annual return, you can then calculate an \( IRR_M \) that you would have earned by investing in a market index with the same timing of investments and withdrawals as the calls and distributions of the private equity investment.  The below formula presumes you want \( IRR_M \) to be a discrete annual amount for compatibility with \( IRR_{PE} \).</p>
+
+<p>\( \log{(1+IRR_M)} = \log{(1+IRR_{PE})} - DirectAlpha \)</p>
+
+<p>KSPME and Direct Alpha supplement the traditional private equity performance measures with mathematically rigourous methods consistent with the CAPM framework.  KSPME provides a measure of how much additional wealth is gained with a private equity measurement.  Direct Alpha tells you the rate at which the additional wealth is accumulated.</p>
+
+<h3>Illustration of calculations of private equity performance measurements in R</h3>
+
+<p>We work from a hypothetical data set of private equity cash flows and valuations with dates for each entry, an identifier for the fund of each entry and a variable &ldquo;type&rdquo; valued as &ldquo;C&rdquo; for cash flows and &ldquo;V&rdquo; for values. This data set has entries for four funds.</p>
+
+<pre><code class="r">require(tseries)
+require(zoo)
+pedata = read.csv(&quot;pedata.csv&quot;)
+pedata$date = as.Date(pedata$date, format = &quot;%m/%d/%Y&quot;)
+unique(pedata$fund)
+</code></pre>
+
+<pre><code>## [1] Fund 1 Fund 2 Fund 3 Fund 4
+## Levels: Fund 1 Fund 2 Fund 3 Fund 4
+</code></pre>
+
+<pre><code class="r">head(pedata)
+</code></pre>
+
+<pre><code>##     fund       date     value type
+## 1 Fund 1 2008-11-14 -272.6158    C
+## 2 Fund 1 2008-12-10  -65.9728    C
+## 3 Fund 1 2008-12-19    0.1193    C
+## 4 Fund 1 2009-05-29   -0.3000    C
+## 5 Fund 1 2009-08-12   -8.5177    C
+## 6 Fund 1 2009-10-22   -7.6254    C
+</code></pre>
+
+<p>We now want to calculate a combined cash flow and valuation for the portfolio of four funds by summing the cash flows which occur on the same day.  We add this to the data set using the name &#39;Total&#39; as though it were an additional fund of that name.  Note we separate the values from the cash flows in case there is a cash flow on the same data as a valuation.</p>
+
+<pre><code class="r">pedata = split(pedata, pedata$type)
+total.c = data.frame(fund = &quot;Total&quot;, aggregate(value ~ date, pedata$C, sum), 
+    type = &quot;C&quot;)
+total.v = data.frame(fund = &quot;Total&quot;, aggregate(value ~ date, pedata$V, sum), 
+    type = &quot;V&quot;)
+pedata = rbind(pedata$C, pedata$V, total.c, total.v)
+tail(pedata)
+</code></pre>
+
+<pre><code>##      fund       date    value type
+## 455 Total 2013-09-06   21.072    C
+## 456 Total 2013-09-20   -3.840    C
+## 457 Total 2013-09-24    1.657    C
+## 458 Total 2013-09-26  -19.144    C
+## 459 Total 2013-09-27   75.803    C
+## 460 Total 2013-09-30 4015.458    V
+</code></pre>
+
+<p>Now we download the Russell 2000 index (&#39;^RUT&#39;) from Yahoo finance.  We fill in missing days from the last market day in the second line of code.  Values on weekends and holidays and holidays are needed because of the accounting convetion to quote fund values on the last day of a calendar quarter.</p>
+
+<pre><code class="r">r2k = get.hist.quote(&quot;^RUT&quot;, min(pedata$date) - 5, max(pedata$date) + 5, quote = &quot;AdjClose&quot;, 
+    provider = &quot;yahoo&quot;, retclass = &quot;zoo&quot;, quiet = TRUE)
+r2k = na.locf(merge(r2k, zoo(, seq(start(r2k), end(r2k), by = &quot;day&quot;)), all = TRUE))
+</code></pre>
+
+<p>The variable <code>r2k</code> is returned from <code>get.hist.quote</code> as a <code>zoo</code> object.  We convert it to a data frame with a variable name for the date value that matches the date value variable name in the private equity data set.  We can then <code>merge</code> it with the private equity data set so that each entry in the data set has its related market index value.  Note that <code>merge</code> jumbles up the fund order &ndash; we solve that in the next step.</p>
+
+<pre><code class="r">r2k = data.frame(date = time(r2k), index = as.numeric(r2k))
+pedata = merge(pedata, r2k)
+head(pedata)
+</code></pre>
+
+<pre><code>##         date   fund   value type index
+## 1 2007-12-28 Fund 4 -136.83    C 771.8
+## 2 2007-12-28  Total -136.83    C 771.8
+## 3 2008-01-30  Total  -41.58    C 695.5
+## 4 2008-01-30 Fund 4  -41.58    C 695.5
+## 5 2008-02-26  Total  -10.90    C 717.3
+## 6 2008-02-26 Fund 4  -10.90    C 717.3
+</code></pre>
+
+<p>We now <code>split</code> the data set in to a list of data frames, one for each fund and the total portfolio.</p>
+
+<pre><code class="r">pelist = split(pedata, pedata$fund)
+names(pelist)
+</code></pre>
+
+<pre><code>## [1] &quot;Fund 1&quot; &quot;Fund 2&quot; &quot;Fund 3&quot; &quot;Fund 4&quot; &quot;Total&quot;
+</code></pre>
+
+<p>I&#39;ve written a function called <code>pe.performance</code> which processes data in the format of each of the data frames in <code>pelist</code>.  The code for all the functions used in this post are listed at the end of the post.  </p>
+
+<p>You can calculate the performance statistics and present them in a table as follows</p>
+
+<pre><code class="r">stats = lapply(pelist, pe.performance)
+stats.df = data.frame(lapply(stats, unlist))
+stats.df
+</code></pre>
+
+<pre><code>##                Fund.1 Fund.2 Fund.3   Fund.4   Total
+## tvpi          1.11299 2.4008 1.8014  1.26647 1.56721
+## dpi           0.18729 0.7794 0.9581  0.35293 0.55322
+## irr           0.03854 0.6255 0.2678  0.07104 0.17548
+## kspme         0.68148 1.8831 1.3344  0.84650 1.08339
+## direct.alpha -0.12965 0.3505 0.1197 -0.04934 0.02883
+## ind.irr       0.18230 0.1449 0.1247  0.12521 0.14208
+</code></pre>
+
+<p>Here is an example of a way to plot the results.  The x axis is the market return, as if invested in Russell 2000.  The y axis is the fund return.  A line is provided with slope of 1 and intercept through the origin.  Funds above this line have outperformed their public market benchmark.  The fund names are printed in a color code indicating the value of KSPME for the fund.</p>
+
+<pre><code class="r">stats.df=data.frame(t(stats.df))
+stats.df=data.frame(name=rownames(stats.df),stats.df)
+require(RColorBrewer)
+require(ggplot2)
+pmepal=brewer.pal(n=10,name=&#39;Spectral&#39;)[c(1,3,8,9,10)]
+palette(pmepal)
+pmecut=cut(stats.df$kspme,c(0,.8,.95,1.05,1.2,100),labels=FALSE)
+ggplot(stats.df,aes(x=ind.irr,y=irr))+
+  geom_text(label=stats.df$name,colour=pmecut)+
+  xlab(&quot;Market Return&quot;)+
+  ylab(&quot;Fund IRR&quot;)+
+  geom_abline(intercept=0,slope=1)+
+  ggtitle(&quot;Private Equity Performance&quot;)+
+  annotate(&quot;rect&quot;,ymin=.47,ymax=.63,xmin=.169,xmax=.181,fill=&#39;grey80&#39;)+
+  annotate(&quot;text&quot;,y=.61,x=.175,label=&quot;PME &gt; 1.2&quot;,colour=pmepal[5],size=3)+
+  annotate(&quot;text&quot;,y=.58,x=.175,label=&quot;1.05 &lt; PME &lt; 1.2&quot;,colour=pmepal[4],size=3)+
+  annotate(&quot;text&quot;,y=.55,x=.175,label=&quot;.95 &lt; PME &lt; 1.05&quot;,colour=pmepal[3],size=3)+
+  annotate(&quot;text&quot;,y=.52,x=.175,label=&quot;.8 &lt; PME &lt; 1.05&quot;,colour=pmepal[2],size=3)+
+  annotate(&quot;text&quot;,y=.49,x=.175,label=&quot;PME &lt; .8&quot;,colour=pmepal[1],size=3)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-8"/> </p>
+
+<h3>Bibliography</h3>
+
+<pre><code>
+- Oleg Gredil, Barry Griffiths, Rudiger Stucke,   (2014) Benchmarking Private Equity: The Direct Alpha Method.  *Available at SSRN*  [http://ssrn.com/abstract=2403521](http://ssrn.com/abstract=2403521)
+- Robert Harris, Tim Jenkinson, Steven Kaplan,   (Forthcoming) Private Equity Performance: What do we Know?.  *The Journal of Finance*  [http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1932316##](http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1932316##)
+- Steven Kaplan, Antoinette Schoar,   (2005) Private Equity Performance: Returns, Persistance and Capital Flows.  *The Journal of Finance*  **60**  (4) 
+</code></pre>
+
+<h3>Code for functions used in this post</h3>
+
+<pre><code class="r">pe.performance = function(x) {
+    ans = list()
+    ans$tvpi = sum(x$value[x$value &gt; 0])/-sum(x$value[x$value &lt; 0])
+    x.c = subset(x, x$type == &quot;C&quot;)
+    x.v = subset(x, x$type == &quot;V&quot;)
+    ans$dpi = sum(x.c$value[x.c$value &gt; 0])/-sum(x.c$value[x.c$value &lt; 0])
+    x.cz = zoo(x.c$value, x.c$date)
+    x.vz = zoo(x.v$value, x.v$date)
+    x.all = mergesum.z(x.cz, x.vz)
+    ans$irr = irr.z(x.all)
+    x.ciz = zoo(x.c$index, x.c$date)
+    x.viz = zoo(x.v$index, x.v$date)
+    x.imat = merge(x.ciz, x.viz, fill = 0)
+    x.ind = zoo(apply(x.imat, 1, max), time(x.imat))
+    fvfactor = (as.numeric(lastinvec(x.ind)))/x.ind
+    x.fv = x.all * fvfactor
+    ans$kspme = (sum(x.fv[x.fv &gt; 0]))/-sum(x.fv[x.fv &lt; 0])
+    ans$direct.alpha = log(1 + irr.z(x.fv))
+    ans$ind.irr = -1 + exp(log(1 + ans$irr) - ans$direct.alpha)
+    return(ans)
+}
+
+mergesum.z = function(x, ...) {
+    mt = merge(x, ..., fill = 0)
+    zoo(rowSums(mt), time(mt))
+}
+
+irr.z = function(cf.z, gips = FALSE) {
+    irr.freq = 365
+    if (!is.zoo(cf.z)) {
+        warning(&quot;cash flow must be zoo object&quot;)
+        return(NA)
+    }
+    if (&quot;Date&quot; != class(time(cf.z))) {
+        warning(&quot;need Date class for zoo index&quot;)
+        return(NA)
+    }
+    if (any(is.na(cf.z))) 
+        return(NA)
+    if (length(cf.z) &lt;= 1) 
+        return(NA)
+    if (all(cf.z &lt;= 0)) 
+        return(NA)
+    if (all(cf.z &gt;= 0)) 
+        return(NA)
+    if (sum(cf.z) == 0) 
+        return(0)
+    if (sum(cf.z) &lt; 0) {
+        rangehi = 0
+        rangelo = -0.01
+        i = 0
+        while (i &lt; 10000 &amp; (sign(npv.znoadjust(rangehi, cf.z)) == sign(npv.znoadjust(rangelo, 
+            cf.z)))) {
+            rangehi = rangelo
+            rangelo = rangelo - 0.01
+            i = i + 1
+        }
+    } else {
+        rangehi = 0.01
+        rangelo = 0
+        i = 0
+        while (i &lt; 10000 &amp; (sign(npv.znoadjust(rangehi, cf.z)) == sign(npv.znoadjust(rangelo, 
+            cf.z)))) {
+            rangelo = rangehi
+            rangehi = rangehi + 0.01
+            i = i + 1
+        }
+    }
+    npv1 = npv.znoadjust(rangelo, cf.z)
+    npv2 = npv.znoadjust(rangehi, cf.z)
+    if (sign(npv1) == sign(npv2)) 
+        return(NA)
+    cf.n = as.numeric(cf.z)
+    if ((cf.n[1] &lt; 0) &amp; (cf.n[length(cf.n)] &gt; 0)) {
+        ans = uniroot(npv.znoadjust, c(rangelo, rangehi), cf = cf.z)
+        apr = ans$root
+    } else {
+        int1 = rangelo
+        int2 = rangehi
+        for (i in 1:40) {
+            inta = mean(c(int1, int2))
+            npva = npv.znoadjust(inta, cf.z)
+            if (sign(npva) == sign(npv1)) {
+                int1 = inta
+                npv1 = npva
+            } else {
+                int2 = inta
+                npv2 = npva
+            }
+        }
+        apr = mean(int1, int2)
+    }
+    ans = ((1 + (apr/irr.freq))^irr.freq) - 1
+    if (gips) {
+        if (cf.z[1] == 0) 
+            cf.z = cf.z[-1]
+        dur = lastinvec(index(cf.z)) - index(cf.z)[1]
+        if (dur &lt; irr.freq) 
+            ans = (1 + ans)^((as.numeric(dur))/irr.freq) - 1
+    }
+    return(ans)
+}
+
+npv.znoadjust = function(i, cf.z) {
+    freq = 365
+    if (!is.zoo(cf.z)) {
+        warning(&quot;cash flow must be zoo object&quot;)
+        return(NA)
+    }
+    if (&quot;Date&quot; != class(time(cf.z))) {
+        warning(&quot;need Date class for zoo index&quot;)
+        return(NA)
+    }
+    tdif = as.numeric(index(cf.z) - (index(cf.z)[1]))
+    d = (1 + (i/freq))^tdif
+    sum(cf.z/d)
+}
+
+lastinvec = function(x) {
+    x[length(x)]
+}
+
+</code></pre>
+
+</body>
+
+</html>
+
